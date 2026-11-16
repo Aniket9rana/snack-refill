@@ -1,0 +1,301 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens follow Peel UI "Folded Ribbon v2" (https://peel-ui.vercel.app):
+ * neutral carbon surfaces separated by ~3% lightness steps, whisper hairlines,
+ * and 2% signal accents. Light is the default; dark is `html[data-theme="dark"]`
+ * (set before paint by the inline script in layout.tsx, toggled in the navbar).
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-well: var(--peel-well);
+  --color-base: var(--peel-base);
+  --color-surface: var(--peel-surface);
+  --color-raised: var(--peel-surface-raised);
+  --color-active: var(--peel-surface-active);
+  --color-line: var(--peel-border);
+  --color-line-subtle: var(--peel-border-subtle);
+  --color-ink: var(--peel-text-primary);
+  --color-ink-2: var(--peel-text-secondary);
+  --color-ink-3: var(--peel-text-tertiary);
+  --color-ink-mono: var(--peel-text-mono);
+  --color-lime: var(--peel-lime);
+  --color-lime-ink: var(--peel-lime-ink);
+  --color-coral: var(--peel-coral);
+  --color-hot: var(--peel-hot);
+  --color-sky: var(--peel-sky);
+  --color-success: var(--peel-success);
+  --color-danger: var(--peel-danger);
+
+  /* Concentric squircle radii (Peel DESIGN.md §1.2) */
+  --radius-stage: 28px;
+  --radius-card: 24px;
+  --radius-dock: 20px;
+  --radius-tool: 18px;
+}
+
+:root {
+  color-scheme: light;
+
+  --peel-well: #dfe1e6;
+  --peel-base: #eceef1;
+  --peel-surface: #ffffff;
+  --peel-surface-raised: #f1f2f5;
+  --peel-surface-active: #e1e4e9;
+
+  /* Fixed "paper" cover colours (identical in both themes) */
+  --peel-light-surface: #f4f4f6;
+  --peel-light-raised: #ffffff;
+  --peel-light-well: #e5e7eb;
+  --peel-light-text: #090a0c;
+  --peel-light-muted: #686c75;
+
+  --peel-border: rgba(9, 10, 12, 0.17);
+  --peel-border-subtle: rgba(9, 10, 12, 0.1);
+  --peel-border-focus: #090a0c;
+
+  --peel-text-primary: #090a0c;
+  --peel-text-secondary: #5b5f68;
+  --peel-text-tertiary: #7b7f88;
+  --peel-text-mono: #5b5f68;
+
+  --peel-lime: #62d100;
+  --peel-lime-ink: #3d8a00;
+  --peel-lime-foreground: #050607;
+  --peel-coral: #e5391f;
+  /* Bold saffron accent for the book page (headings, section titles); AA on white */
+  --peel-hot: #d9480f;
+  --peel-sky: #0b8ed4;
+  --peel-success: #0f9f6e;
+  --peel-danger: #d92d20;
+
+  --peel-primary-hover: #2a2c31;
+  /* Fill for the search field and filter chips: same grey as the page */
+  --peel-field: var(--peel-base);
+
+  --shadow-bevel:
+    inset 0 1px 0 0 #fff, inset 0 -2px 0 0 rgba(9, 10, 12, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    0 1px 1px rgba(9, 10, 12, 0.14), 0 4px 8px -2px rgba(9, 10, 12, 0.14), 0 14px 28px -10px rgba(9, 10, 12, 0.24);
+  --shadow-well:
+    inset 0 3px 6px 0 rgba(9, 10, 12, 0.2), inset 0 0 0 1px var(--peel-border),
+    0 1px 0 0 rgba(255, 255, 255, 0.95);
+  --shadow-pill:
+    inset 0 1px 0 0 #fff, inset 0 -1px 0 0 rgba(9, 10, 12, 0.1), 0 1px 3px rgba(9, 10, 12, 0.22);
+  --shadow-primary:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24), inset 0 -2px 0 0 rgba(0, 0, 0, 0.55),
+    0 8px 18px -6px rgba(9, 10, 12, 0.6);
+  --bevel-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(9, 10, 12, 0.035) 100%);
+  --shadow-menu: 0 12px 32px rgba(9, 10, 12, 0.14);
+  --shadow-cover-sm: rgba(9, 10, 12, 0.32);
+  --shadow-cover-lg: rgba(9, 10, 12, 0.4);
+  --glass-hi: rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --peel-well: #050607;
+  --peel-base: #08090a;
+  --peel-surface: #111214;
+  --peel-surface-raised: #17181b;
+  --peel-surface-active: #1e2024;
+
+  --peel-border: rgba(255, 255, 255, 0.065);
+  --peel-border-subtle: rgba(255, 255, 255, 0.04);
+  --peel-border-focus: #f5f5f7;
+
+  --peel-text-primary: #f5f5f7;
+  --peel-text-secondary: #8e9299;
+  --peel-text-tertiary: #52555a;
+  --peel-text-mono: #a1a5aa;
+
+  --peel-lime: #84ff00;
+  --peel-lime-ink: #84ff00;
+  --peel-coral: #ff553e;
+  --peel-hot: #ff7a3d;
+  --peel-sky: #38bdf8;
+  --peel-success: #34d399;
+  --peel-danger: #ff453a;
+
+  --peel-primary-hover: #ffffff;
+  --peel-field: var(--peel-well);
+
+  --shadow-bevel:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.075), inset 0 -1px 0 0 rgba(0, 0, 0, 0.65),
+    0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  --shadow-well:
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.78), inset 0 0 0 1px var(--peel-border-subtle),
+    0 1px 0 0 rgba(255, 255, 255, 0.04);
+  --shadow-pill: inset 0 1px 0 0 rgba(255, 255, 255, 0.07);
+  --shadow-primary: inset 0 1px 0 0 rgba(255, 255, 255, 0.7), 0 6px 18px -8px rgba(255, 255, 255, 0.35);
+  --shadow-menu: 0 12px 32px rgba(0, 0, 0, 0.7);
+  --bevel-sheen: linear-gradient(transparent, transparent);
+  --shadow-cover-sm: rgba(0, 0, 0, 0.9);
+  --shadow-cover-lg: rgba(0, 0, 0, 0.95);
+  --glass-hi: rgba(255, 255, 255, 0.24);
+}
+
+html {
+  background: var(--peel-base);
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--peel-base);
+  color: var(--peel-text-primary);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--peel-lime);
+  color: var(--peel-lime-foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--peel-border-focus);
+  outline-offset: 3px;
+}
+
+/* ── Hardware surfaces (zero paint cost, no backdrop blur) ── */
+.bevel-machined {
+  background-color: var(--peel-surface);
+  background-image: var(--bevel-sheen);
+  border: 1px solid var(--peel-border);
+  box-shadow: var(--shadow-bevel);
+}
+
+.well-recessed {
+  background-color: var(--peel-well);
+  box-shadow: var(--shadow-well);
+}
+
+.glass-specular {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.11) 0%,
+    rgba(255, 255, 255, 0.025) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+    0 10px 24px -6px rgba(0, 0, 0, 0.55);
+}
+
+/* Search / filter fields: page-grey fill (declared after .well-recessed so it wins) */
+.field-fill {
+  background-color: var(--peel-field);
+}
+
+/* ── Type roles (Peel DESIGN.md §2.2) ── */
+.micro-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--peel-text-tertiary);
+}
+
+.display-hero {
+  font-size: clamp(2.6rem, 6.4vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.97;
+}
+
+.pitch-lead {
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.32;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbars that match the surface */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--peel-surface-active) transparent;
+}
+
+/* Skeleton shimmer: transform-only, compositor friendly */
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--peel-surface-active);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--peel-text-primary) 5%, transparent),
+    transparent
+  );
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .skeleton::after {
+    animation: none;
+  }
+}
+
+
+/* Soft ambient wash behind the whole app (static: no paint cost while scrolling) */
+.ambient {
+  background:
+    radial-gradient(900px 420px at 12% -8%, color-mix(in srgb, var(--peel-sky) 11%, transparent), transparent 70%),
+    radial-gradient(800px 380px at 92% -4%, color-mix(in srgb, var(--peel-hot) 10%, transparent), transparent 70%);
+}
+
+/* Diagonal hatch for "reserved but not spent yet" budget */
+.hatch {
+  background-image: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, currentColor 55%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.55; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: pulse-ring 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot::after { animation: none; opacity: 0; }
+}
+
